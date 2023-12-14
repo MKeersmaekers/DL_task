@@ -99,7 +99,9 @@ def evaluate_model(model, test_generator):
     st.pyplot()
 
 def main():
+    # Update the classes list to only include the classes you want
     categories = ['tomato', 'banana', 'potato', 'strawberry', 'lemon']
+    classes = [f"{category}" for category in categories]
     st.title('Image Classification Streamlit App')
 
     # Download images
@@ -115,12 +117,12 @@ def main():
     if st.button('Train and Evaluate Model'):
         model = create_model()
 
-        # Create data generators
+        # Create data generators with the explicit classes list
         datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
         train_generator = datagen.flow_from_directory(directory='.', target_size=(150, 150), batch_size=32,
-                                                     class_mode='categorical', subset='training')
+                                              class_mode='categorical', subset='training', classes=classes)
         validation_generator = datagen.flow_from_directory(directory='.', target_size=(150, 150), batch_size=32,
-                                                          class_mode='categorical', subset='validation')
+                                                   class_mode='categorical', subset='validation', classes=classes)
 
         # Train the model
         epochs = st.slider('Select the number of epochs:', min_value=1, max_value=20, value=10)
@@ -132,7 +134,7 @@ def main():
         # Evaluate the model
         test_datagen = ImageDataGenerator(rescale=1./255)
         test_generator = test_datagen.flow_from_directory(directory='.', target_size=(150, 150), batch_size=32,
-                                                          class_mode='categorical')
+                                                  class_mode='categorical', classes=classes)
 
         evaluate_model(model, test_generator)
 
