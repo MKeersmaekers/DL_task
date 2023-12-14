@@ -99,6 +99,7 @@ def evaluate_model(model, test_generator):
     st.pyplot()
 
 def main():
+    categories = ['tomato', 'banana', 'potato', 'strawberry', 'lemon']
     st.title('Image Classification Streamlit App')
 
     # Download images
