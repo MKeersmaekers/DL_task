@@ -118,9 +118,9 @@ def main():
         # Create data generators
         datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
         train_generator = datagen.flow_from_directory(directory='.', target_size=(150, 150), batch_size=32,
-                                                     class_mode='categorical', subset='training', num_classes=5)
+                                                     class_mode='categorical', subset='training')
         validation_generator = datagen.flow_from_directory(directory='.', target_size=(150, 150), batch_size=32,
-                                                          class_mode='categorical', subset='validation', num_classes=5)
+                                                          class_mode='categorical', subset='validation')
 
         # Train the model
         epochs = st.slider('Select the number of epochs:', min_value=1, max_value=20, value=10)
